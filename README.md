@@ -14,7 +14,7 @@ Reuleaux triangle) are proved. The Reuleaux support function is defined explicit
 The support function is also proved to be the support function of an explicit convex set of constant
 width `w`, packaged as a Mathlib `ConvexBody`.
 
-**Status:** all statements proved, with no `sorry`. `gate.sh` checks **62** named declarations.
+**Status:** all statements proved, with no `sorry`. `gate.sh` checks **96** named declarations.
 
 ## Main statements
 
@@ -49,13 +49,13 @@ family `a + b·cos 3θ`, `0 ≤ 8b ≤ a`).
 
 ## Verification
 
-`./gate.sh` builds the library and generates its own `#print axioms` queries for 62 named
+`./gate.sh` builds the library and generates its own `#print axioms` queries for 96 named
 declarations. The gate fails if any source file contains `sorry`, `admit`, `native_decide`, `axiom`,
 `#eval`, `run_cmd`, `initialize`, `IO`, `set_option` or a syntax extension; if the build fails; if a
 named declaration is missing or has an extra report; or if a named declaration depends on anything
 other than `propext`, `Classical.choice` and `Quot.sound`.
 
-Output: `PASS (62 declarations, standard axioms only)`. Verified on two machines of different
+Output: `PASS (96 declarations, standard axioms only)`. Verified on two machines of different
 architecture (x86-64 Linux and arm64 macOS) at the pinned Mathlib revision.
 
 `tests/tamper.sh` plants six kinds of fake proof in scratch copies and checks that the gate rejects
@@ -69,6 +69,10 @@ each one:
 | macro | a custom macro that rewrites `#print axioms` |
 | falsehyp | a hypothesis dropped from a theorem (false) |
 | wrap | a genuine extra axiom with a long name, so the report wraps |
+
+## Layers 14 and 15
+
+`Barbier/L14.lean` (20 declarations) restates the main results so that the statements use only Mathlib notions. The curve, perimeter, body and Reuleaux support function are written out in full, with bridge lemmas (`l14b_*`) and explicit witnesses (`l14w_*`). `Barbier/L15Classical.lean` reproduces verbatim, in namespace `Barbier.Classical`, 34 definitions and statements (17 `classical_*` statements and 2 well-formedness obligations) written independently from textbook statements by an AI model that did not see this code. It adds 14 gated theorems (`cov_*` and new-proof lemmas) proving these statements, or parts of them, from this development. No writer statement was shown false.
 
 ## Prior art
 
